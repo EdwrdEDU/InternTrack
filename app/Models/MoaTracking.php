@@ -9,7 +9,6 @@ class MoaTracking extends Model
     protected $table = 'moa_tracking';
 
     protected $fillable = [
-        'intern_id',
         'moa',
         'valid_until',
     ];
@@ -17,9 +16,4 @@ class MoaTracking extends Model
     protected $casts = [
         'valid_until' => 'date',
     ];
-
-    public function intern()
-    {
-        return $this->belongsTo(Intern::class);
-    }
 }

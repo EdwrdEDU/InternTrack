@@ -16,25 +16,14 @@
 
                 <div class="space-y-6">
                     <div>
-                        <label for="intern_id" class="block text-sm font-medium text-gray-900 mb-2">Intern <span class="text-red-500">*</span></label>
-                        <select name="intern_id" id="intern_id" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all @error('intern_id') border-red-500 @enderror">
-                            <option value="">Select intern</option>
-                            @foreach($interns as $intern)
-                                <option value="{{ $intern->id }}" {{ old('intern_id') == $intern->id ? 'selected' : '' }}>{{ $intern->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('intern_id')<p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>@enderror
-                    </div>
-
-                    <div>
-                        <label for="moa" class="block text-sm font-medium text-gray-900 mb-2">MOA <span class="text-red-500">*</span></label>
-                        <input type="text" name="moa" id="moa" value="{{ old('moa') }}" required placeholder="Enter MOA details" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all @error('moa') border-red-500 @enderror">
+                        <label for="moa" class="block text-sm font-medium text-gray-900 mb-2">Institution <span class="text-red-500">*</span></label>
+                        <input type="text" name="moa" id="moa" value="{{ old('moa') }}" required placeholder="Enter institution name" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all @error('moa') border-red-500 @enderror">
                         @error('moa')<p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>@enderror
                     </div>
 
                     <div>
-                        <label for="valid_until" class="block text-sm font-medium text-gray-900 mb-2">Valid Until</label>
-                        <input type="date" name="valid_until" id="valid_until" value="{{ old('valid_until') }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all @error('valid_until') border-red-500 @enderror">
+                        <label for="valid_until" class="block text-sm font-medium text-gray-900 mb-2">Valid Date <span class="text-red-500">*</span></label>
+                        <input type="date" name="valid_until" id="valid_until" value="{{ old('valid_until') }}" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all @error('valid_until') border-red-500 @enderror">
                         @error('valid_until')<p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>@enderror
                     </div>
                 </div>

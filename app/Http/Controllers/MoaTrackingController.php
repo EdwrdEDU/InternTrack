@@ -13,7 +13,7 @@ class MoaTrackingController extends Controller
      */
     public function index()
     {
-        $moaRecords = MoaTracking::with('intern')->latest()->get();
+        $moaRecords = MoaTracking::latest()->get();
         return view('moa.index', compact('moaRecords'));
     }
 
@@ -22,8 +22,7 @@ class MoaTrackingController extends Controller
      */
     public function create()
     {
-        $interns = Intern::all();
-        return view('moa.create', compact('interns'));
+        return view('moa.create');
     }
 
     /**
@@ -32,7 +31,6 @@ class MoaTrackingController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'intern_id' => 'required|exists:interns,id',
             'moa' => 'required|string|max:255',
             'valid_until' => 'nullable|date',
         ]);
@@ -47,8 +45,7 @@ class MoaTrackingController extends Controller
      */
     public function edit(MoaTracking $moa)
     {
-        $interns = Intern::all();
-        return view('moa.edit', compact('moa', 'interns'));
+        return view('moa.edit', compact('moa'));
     }
 
     /**
@@ -57,7 +54,6 @@ class MoaTrackingController extends Controller
     public function update(Request $request, MoaTracking $moa)
     {
         $validated = $request->validate([
-            'intern_id' => 'required|exists:interns,id',
             'moa' => 'required|string|max:255',
             'valid_until' => 'nullable|date',
         ]);

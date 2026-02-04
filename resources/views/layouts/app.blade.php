@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'OJT Tracker')</title>
+    <title>@yield('title', 'InternTrack')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
@@ -13,13 +13,17 @@
     <nav class="border-b border-gray-200 bg-white sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <div class="text-lg font-semibold text-gray-900">OJT Tracker</div>
+                <a href="/" class="flex items-center space-x-2.5 group">
+                    <div class="w-9 h-9 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">InternTrack</span>
+                </a>
                 <div class="flex space-x-1">
                     <a href="{{ route('interns.index') }}" class="px-4 py-2 text-sm font-medium {{ request()->routeIs('interns.*') ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-900' }} transition-colors">
-                        Masterlist
-                    </a>
-                    <a href="{{ route('requirements.index') }}" class="px-4 py-2 text-sm font-medium {{ request()->routeIs('requirements.*') ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-900' }} transition-colors">
-                        Requirements
+                        Student List
                     </a>
                     <a href="{{ route('moa.index') }}" class="px-4 py-2 text-sm font-medium {{ request()->routeIs('moa.*') ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-900' }} transition-colors">
                         MOA Tracking

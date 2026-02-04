@@ -25,12 +25,4 @@ class Intern extends Model
         'start_date' => 'date',
         'end_date' => 'date',
     ];
-
-    /**
-     * Get the requirements for the intern.
-     */
-    public function requirement()
-    {
-        return $this->hasOne(Requirement::class);
-    }
 }
