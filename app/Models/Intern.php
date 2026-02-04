@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Intern extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'status',
+        'school',
+        'course',
+        'email',
+        'department',
+        'supervisor_trainer_name',
+        'start_date',
+        'end_date',
+    ];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+    ];
+
+    /**
+     * Get the requirements for the intern.
+     */
+    public function requirement()
+    {
+        return $this->hasOne(Requirement::class);
+    }
+}
