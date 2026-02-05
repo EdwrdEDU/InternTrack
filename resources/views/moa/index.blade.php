@@ -66,15 +66,16 @@
         </div>
     @else
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-            <table class="w-full text-sm">
-                <thead class="bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-200">
-                    <tr>
-                        <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Institution</th>
-                        <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Valid Date</th>
-                        <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Status</th>
-                        <th class="px-6 py-4 text-right font-semibold text-gray-700 uppercase text-xs tracking-wider">Actions</th>
-                    </tr>
-                </thead>
+            <div class="max-h-[calc(3*70px+48px)] overflow-y-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-200 sticky top-0 z-10">
+                        <tr>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Institution</th>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Valid Date</th>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Status</th>
+                            <th class="px-6 py-4 text-right font-semibold text-gray-700 uppercase text-xs tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
                 <tbody class="divide-y divide-gray-100">
                     @foreach($moaRecords as $record)
                         <tr class="hover:bg-blue-50/50 transition-all duration-150">
@@ -121,6 +122,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
     @endif
 </div>

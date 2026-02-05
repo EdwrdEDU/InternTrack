@@ -66,7 +66,7 @@
             @endif
         </div>
     @else
-        <div class="space-y-3">
+        <div class="space-y-3 max-h-[calc(3*180px+2*12px)] overflow-y-auto pr-2">
             @foreach($interns as $intern)
                 <div class="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-blue-200 transition-all duration-200">
                     <div class="flex items-center justify-between mb-4">
