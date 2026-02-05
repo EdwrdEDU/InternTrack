@@ -25,4 +25,9 @@ class Intern extends Model
         'start_date' => 'date',
         'end_date' => 'date',
     ];
+
+    public function requirement()
+    {
+        return $this->hasOne(Requirement::class);
+    }
 }

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="flex flex-col">
-    <div class="flex justify-between items-center mb-8">
+    <div class="flex justify-between items-center mb-6">
         <div>
             <h1 class="text-3xl font-light text-gray-900">MOA Tracking</h1>
         </div>
@@ -14,8 +14,43 @@
         </a>
     </div>
 
+    <!-- Search and Filter Controls -->
+    <div class="bg-white border border-gray-200 rounded-xl p-4 mb-6">
+        <form method="GET" action="{{ route('moa.index') }}" class="flex flex-col sm:flex-row gap-3">
+            <div class="flex-1">
+                <div class="relative">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by institution..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <select name="status" class="px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">All Status</option>
+                    <option value="valid" {{ request('status') === 'valid' ? 'selected' : '' }}>Valid</option>
+                    <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired</option>
+                </select>
+                <button type="submit" class="px-6 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                    Apply
+                </button>
+                @if(request('search') || request('status'))
+                    <a href="{{ route('moa.index') }}" class="px-4 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                        Clear
+                    </a>
+                @endif
+            </div>
+        </form>
+    </div>
+
     @if($moaRecords->isEmpty())
         <div class="bg-gradient-to-br from-gray-50 to-purple-50 rounded-2xl border border-gray-200 text-center py-16 px-6">
+            @if(request('search') || request('status'))
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                    <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
+                <p class="text-gray-600 mb-6">Try adjusting your search or filters</p>
+                <a href="{{ route('moa.index') }}" class="text-blue-600 hover:text-blue-700 font-medium">Clear filters</a>
+            @else
             <div class="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4">
                 <svg class="h-8 w-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -27,6 +62,7 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 Add First MOA
             </a>
+            @endif
         </div>
     @else
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -35,6 +71,7 @@
                     <tr>
                         <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Institution</th>
                         <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Valid Date</th>
+                        <th class="px-6 py-4 text-left font-semibold text-gray-700 uppercase text-xs tracking-wider">Status</th>
                         <th class="px-6 py-4 text-right font-semibold text-gray-700 uppercase text-xs tracking-wider">Actions</th>
                     </tr>
                 </thead>
@@ -54,6 +91,15 @@
                                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                     <span class="text-gray-600">{{ $record->valid_until?->format('M d, Y') ?? '-' }}</span>
                                 </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                @if($record->status === 'Valid')
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">✓ Valid</span>
+                                @elseif($record->status === 'Expired')
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-200">✕ Expired</span>
+                                @else
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 border border-gray-200">- No Date</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-2">

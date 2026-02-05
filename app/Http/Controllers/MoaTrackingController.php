@@ -11,9 +11,26 @@ class MoaTrackingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $moaRecords = MoaTracking::latest()->get();
+        $query = MoaTracking::query();
+        
+        // Search by institution name
+        if ($request->filled('search')) {
+            $query->where('moa', 'like', '%' . $request->search . '%');
+        }
+        
+        // Filter by status (valid/expired)
+        if ($request->filled('status')) {
+            $today = now();
+            if ($request->status === 'valid') {
+                $query->where('valid_until', '>=', $today);
+            } elseif ($request->status === 'expired') {
+                $query->where('valid_until', '<', $today);
+            }
+        }
+        
+        $moaRecords = $query->latest()->get();
         return view('moa.index', compact('moaRecords'));
     }
 

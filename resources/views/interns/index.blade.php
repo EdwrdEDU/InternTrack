@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="flex flex-col">
-    <div class="flex justify-between items-center mb-8">
+    <div class="flex justify-between items-center mb-6">
         <div>
             <h1 class="text-3xl font-light text-gray-900">Student List</h1>
         </div>
@@ -14,8 +14,44 @@
         </a>
     </div>
 
+    <!-- Search and Sort Controls -->
+    <div class="bg-white border border-gray-200 rounded-xl p-4 mb-6">
+        <form method="GET" action="{{ route('interns.index') }}" class="flex flex-col sm:flex-row gap-3">
+            <div class="flex-1">
+                <div class="relative">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <select name="status" class="px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">All Status</option>
+                    <option value="Waiting" {{ request('status') === 'Waiting' ? 'selected' : '' }}>Waiting</option>
+                    <option value="Ongoing" {{ request('status') === 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
+                    <option value="Finished" {{ request('status') === 'Finished' ? 'selected' : '' }}>Finished</option>
+                </select>
+                <button type="submit" class="px-6 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                    Apply
+                </button>
+                @if(request('search') || request('status'))
+                    <a href="{{ route('interns.index') }}" class="px-4 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                        Clear
+                    </a>
+                @endif
+            </div>
+        </form>
+    </div>
+
     @if($interns->isEmpty())
         <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl border border-gray-200 text-center py-16 px-6">
+            @if(request('search'))
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-4">
+                    <svg class="h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
+                <p class="text-gray-600 mb-6">Try adjusting your search terms</p>
+                <a href="{{ route('interns.index') }}" class="text-blue-600 hover:text-blue-700 font-medium">Clear search</a>
+            @else
             <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mb-4 shadow-lg">
                 <svg class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -27,6 +63,7 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 Add First Student
             </a>
+            @endif
         </div>
     @else
         <div class="space-y-3">

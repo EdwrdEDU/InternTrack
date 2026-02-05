@@ -11,9 +11,21 @@ class InternController extends Controller
     /**
      * Display a listing of the interns.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $interns = Intern::with('requirement')->latest()->get();
+        $query = Intern::with('requirement');
+        
+        // Search by name
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        
+        // Filter by status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        
+        $interns = $query->latest()->get();
         return view('interns.index', compact('interns'));
     }
 
@@ -71,6 +83,21 @@ class InternController extends Controller
      */
     public function edit(Intern $intern)
     {
+        // Ensure the intern has a requirement record
+        if (!$intern->requirement) {
+            Requirement::create([
+                'intern_id' => $intern->id,
+                'pds' => false,
+                'waiver' => false,
+                'med_cert' => false,
+                'moa' => false,
+                'photo_2x2' => false,
+                'accomplishment_report' => false,
+                'certificate_of_completion' => false,
+            ]);
+            $intern->load('requirement');
+        }
+        
         return view('interns.edit', compact('intern'));
     }
 
