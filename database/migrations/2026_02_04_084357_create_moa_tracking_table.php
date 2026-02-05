@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('moa_tracking', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('intern_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('moa');
             $table->date('valid_until')->nullable();
             $table->timestamps();
